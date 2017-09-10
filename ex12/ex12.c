@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main (int argc, const char *argv[]) {
-	
+
 	int areas[] = {10, 12, 13, 14, 20};
 
 	// char array declared as one single string
@@ -14,6 +14,7 @@ int main (int argc, const char *argv[]) {
 		'C', '.', ' ',
 		'T', 'h', 'o', 'm', 'a', 's', 'o', 'n', '\0'
 	};
+	
 
 	// WARNING: this might need to change %ld to a %u, as sizeof is unsigned
 
@@ -21,6 +22,15 @@ int main (int argc, const char *argv[]) {
 	 * Recall that ints are 4 bytes (32-bit) by default, and that chars are
 	 * 1 byte (8 bits) by default. Size of will give size measured in bytes.
 	 */
+
+	areas[0] = 100;
+	areas[3] = 2000;
+	areas [1] = name[3]; // Sets areas[1] to the decimal val of 'e'
+
+	name[3] = 'f';
+
+	full_name[9] = '6';
+	full_name[12] = '9';
 
 	printf("The size of an int: %ld\n", sizeof(int));
 
