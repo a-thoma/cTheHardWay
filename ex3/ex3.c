@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 
 	printf("I am %d years old.\n", age);
 	printf("I am %d inches tall.\n", height);
-	printf("My dick is %d feet long.\n");      // prints garbage
+	printf("My house is %d stories tall.\n");    // prints garbage
 	printf("I have had %d bad days.\n\n", days); // prints 0
 
 	printf("This is extra credit\t");
