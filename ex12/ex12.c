@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 int main (int argc, const char *argv[]) {
-	
+
+	// int array declared one-by-one
 	int areas[] = {10, 12, 13, 14, 20};
 
 	// char array declared as one single string
 	char name[] = "Alex";
 
-	// char array declared one by one, as each indiividual char
+	// char array declared one by one, as each individual char
 	// notice the null-character at the end, making a NTS
 	char full_name[] = {
 		'A', 'l', 'e', 'x', 'a', 'n', 'd', 'e', 'r', ' ',
