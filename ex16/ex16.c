@@ -74,6 +74,17 @@ int main(int argc, const char *argv[]) {
 	  	printf("%s lived %d years so far.\n", *cur_name, *cur_age);
 	}
 
+	/* separator */
+	printf("---\n");
+
+	/* print the addresses the pointers are using */
+	for (i = 0; i < count; i++) {
+		
+		/* print the stuff... again... */
+		printf("Address of element %d:\n\t cur_name: %p \n\t cur_age: %p\n",
+			i, (cur_name + i), (cur_age + i));
+	}
+
 	/* we're done here */
 	return 0;
 }
