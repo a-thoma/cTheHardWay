@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* front declarations */
+struct Person *Person_create(char *name, int age, int height, int weight);
+void Person_destroy(struct Person *who);
+void Person_print(struct Person *who);
+
 /* define struct Person */
 struct Person {
 
