@@ -25,7 +25,7 @@ struct Person *Person_create(char *name, int age, int height, int weight) {
 
 	/* use malloc() to allocate memory of size Person
 	 * malloc() will do the calculations based on the argument passed to it,
-	 * in this case, sizeof(struct Person) to determin the right amount of 
+	 * in this case, sizeof(struct Person) to determine the right amount of 
 	 * memory to use
 	/*/
 	struct Person *who = malloc(sizeof(struct Person));
