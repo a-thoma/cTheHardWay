@@ -39,11 +39,7 @@ typedef struct Connection {
 void die(Connection *conn, const char *message);
 void Address_print(Address *addr);
 void Database_load(Connection *conn);
-<<<<<<< HEAD
-Connection* Database_open(const char *filename, char mode);
-=======
-Connection *Database_open(const char *filename, char mode);
->>>>>>> 8c9e2a63151c0fada0fbf6b60aeda3172a176788
+Connection* Database_open(const char *filename, char mode);\
 void Database_close(Connection *conn);
 void Database_write(Connection *conn);
 void Database_create(Connection *conn);
