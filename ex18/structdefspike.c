@@ -8,6 +8,7 @@ struct Node {
 typedef struct Node Node;
 
 typedef struct buttPlus {
+	
 	char *str;
 } buttPlus;
 
