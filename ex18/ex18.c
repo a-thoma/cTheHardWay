@@ -16,7 +16,6 @@ typedef struct Address {
 	/* elements of struct Address */
 	int id;
 	int set;
-	int data;
 	char name[MAX_DATA];
 	char email[MAX_DATA];
 } Address;
@@ -24,6 +23,7 @@ typedef struct Address {
 typedef struct Database {
 
 	/* element of struct Database */
+	int datacount;
 	int rowcount;
 	Address rows[MAX_ROWS];
 } Database;
@@ -39,7 +39,7 @@ typedef struct Connection {
 void die(Connection *conn, const char *message);
 void Address_print(Address *addr);
 void Database_load(Connection *conn);
-Connection* Database_open(const char *filename, char mode);\
+Connection* Database_open(const char *filename, char mode);
 void Database_close(Connection *conn);
 void Database_write(Connection *conn);
 void Database_create(Connection *conn);
