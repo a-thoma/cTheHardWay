@@ -1,6 +1,6 @@
 # begin makefile
 
-CFLAGS: -Wall -g
+CFLAGS = -Wall -g
 
 all: ex19
 
