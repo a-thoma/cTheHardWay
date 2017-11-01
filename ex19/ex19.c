@@ -1,5 +1,9 @@
 /* TODO: Find out how to add cmp functionality to quicksort implementation */
 
+/* TODO: Can I just make a header for quicksort and use that instead of
+ * copying and pasting it in this source file?
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
