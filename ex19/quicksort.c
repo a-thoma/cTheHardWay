@@ -1,10 +1,12 @@
 /*
- *	This is the Lomuto partition scheme for quicksort popularized by the
- *	"Programming Pearls" book
+ *	RECURSIVE QUICKSORT
  *
- *	please refer to the appropriate section in that book to learn about
- *	this algorithm implementation
+ *	This implementation of quicksort utilizes the first element of any
+ *	partition as the pivot value.
+ *
  */
+
+ /* TODO: Fix edge case with array (TODO tags in main) */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,10 +19,9 @@ void quicksort_helper(int *arr, int length);
 
 /* functions/procedures */
 
-
-/************** swapping procedure ***************
- * swaps two elements, i and j, in the array arr *
- *************************************************
+/*
+ * swapping procedure
+ * swaps two elements, i and j, in the array arr
  */
 void swap(int *arr, int i, int j) {
 
@@ -34,99 +35,88 @@ void swap(int *arr, int i, int j) {
 	/* we're done here */
 }
 
-/************ partition function *************
- * returns the partition index for our array *
- *********************************************
+/*
+ * partition function
+ * returns the partition index for our array
  */
 int partition(int *arr, int lo, int hi) {
 
 	/* local variables */
-	int pivot = arr[hi]; /* our pivot value from the array */
+	int i = lo + 1;     /* leftmost iterator */
+	int j = hi; 	   /* rightmost iterator */
+	int pivot = arr[lo]; /* pivot value */
 
-	while (lo <= hi) {
+	/* execute until we break out manually by midpoint break */
+	while(1) {
 
-    	while (arr[lo] < pivot) {
+		/* as long as our ith element is less than our pivot */
+		while(arr[i] < pivot && i < hi) {
 
-    		lo++;
-    	}
+			/* iterate through the array */
+			i++;
+		}
 
-    	while (arr[hi] > pivot) {
+		/* as long as our jth element is greater than our pivot */
+		while(arr[j] > pivot && j > lo) {
 
-    		hi--;
-    	}
+			/* iterate through the array */
+			j--;
+		}
 
-    	if (lo <= hi) {
+		/* if our iterators cross, we've gone too far */
+		if(i >= j) break;
 
-    		swap(arr, lo, hi);
-    		lo++;
-    		hi--;
- 		}
+		/* swap our ith and jth elements */
+		swap(arr, i, j);
 	}
 
-	return pivot;
+	/* swap our jth element with our pivot */
+	swap(arr, lo, j);
+
+	/* we're done here, return our pivot point */
+	return j;
 }
 
-/********************** quicksort main procedure **********************
- * given an array of arbitrary size, sorts the array according to the *
- * quicksort algorithm:                                               *
- *                              * * *                                 *
- * EXPLAIN HERE(?)                                                    *
- **********************************************************************
+/* 
+ * quicksort main procedure
+ * given an array of arbitrary size, sorts the array according to the
+ * quicksort algorithm:
+ *
+ * EXPLAIN HERE(?)
  */
 void quicksort(int *arr, int lo, int hi) {
 
-	/* local variables */
-
-	int i = 0;
-	int j = 0;
-	int temp = 0;
-	int pivot = 0;
-
+	/* as long as our rightmost index isn't the second element */
 	if(hi > 1) {
 
-		i = lo + 1;
-		j = hi;
-		pivot = arr[lo];
+		/* get our partition element */
+		int part = partition(arr, lo, hi);
 
-		while(1) {
+		/* bounds checking for continuing quicksort left case */
+		if(lo < (part - 1)) {
 
-			while(arr[i] < pivot && i < hi) {
-
-				i++;
-			}
-
-			while(arr[j] > pivot && j > lo) {
-
-				j--;
-			}
-
-			if(i >= j) break;
-
-			temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+			/* recursive call to quicksort the left partition */
+			quicksort(arr, lo, part - 1);
 		}
-		temp = arr[lo]; arr[lo] = arr[j]; arr[j] = temp;
 
+		/* bounds checking for continuing quicksort right case */
+		if((part + 1) < hi) {
 
-		if(lo < (j - 1)) {
-
-			quicksort(arr, lo, j - 1);
-		}
-		
-		if((j + 1) < hi) {
-
-			quicksort(arr, j + 1, hi);
+			/* recursive call to quicksort the right partition */
+			quicksort(arr, part + 1, hi);
 		}
 	}
 	
 	/* we're done here */
 }
 
-/* ********************* quicksort helper procedure **********************
- * calculates the lo and hi value from the passed arguments, which are   *
- * the array and its length, respectively                                *
- *                                                                       *
- * calls the quicksort main procedure on the array and its initial lo/hi *
- *************************************************************************
+/*
+ * quicksort helper procedure
+ *
+ * calculates the lo and hi value from the passed arguments, which are
+ * the array and its length, respectively
+ *
+ * calls the quicksort main procedure on the array and its initial lo/hi
  */
 void quicksort_helper(int *arr, int length) {
 
@@ -141,9 +131,14 @@ void quicksort_helper(int *arr, int length) {
 /* main driver function */
 int main(int argc, char **argv) {
 
+	/* test the functionality of our quicksort on a small sample array */
+
 	/* local variables */
 	int i = 0; 						/* iterator */
-	int arr[] = {2, 6, 3, 1, 5, 4}; /* array to sort */
+
+	/* ARRAY FOUND TO NOT WORK: 3 4 5 6 2 1 */
+	/* TODO: FIX THIS */
+	int arr[] = {2, 6, 3, 1, 5, 4, 7, 10, 9, 8}; /* array to sort */
 	int length = (sizeof(arr) / sizeof(int));
 
 	/* get a pointer for our array */

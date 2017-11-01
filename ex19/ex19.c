@@ -1,3 +1,5 @@
+/* TODO: Find out how to add cmp functionality to quicksort implementation */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -60,17 +62,104 @@ int *bubble_sort(int *nums, int count, compare_cb cmp) {
 	return target;
 }
 
-void quicksort(int *nums, int left, int right) {
+/*
+ * swapping procedure
+ * swaps two elements, i and j, in the array arr
+ */
+void swap(int *arr, int i, int j) {
 
-	
+	/* local variables */
+	int temp = arr[i]; /* our temporary storage */
+
+	/* swap the variables around */
+	arr[i] = arr[j];
+	arr[j] = temp;
+
+	/* we're done here */
 }
 
-/* helper function to handle quicksort
- * utilizes C built-in qsort function
+/*
+ * partition function
+ * returns the partition index for our array
  */
-int *quick_sort_helper(int *nums, int count, compare_cb cmp) {
-	int left = 0;
-	int right = count - 1;
+int partition(int *arr, int lo, int hi) {
+
+	/* local variables */
+	int i = lo + 1;     /* leftmost iterator */
+	int j = hi; 	   /* rightmost iterator */
+	int pivot = arr[lo]; /* pivot value */
+
+	/* execute until we break out manually by midpoint break */
+	while(1) {
+
+		/* as long as our ith element is less than our pivot */
+		while(arr[i] < pivot && i < hi) {
+
+			/* iterate through the array */
+			i++;
+		}
+
+		/* as long as our jth element is greater than our pivot */
+		while(arr[j] > pivot && j > lo) {
+
+			/* iterate through the array */
+			j--;
+		}
+
+		/* if our iterators cross, we've gone too far */
+		if(i >= j) break;
+
+		/* swap our ith and jth elements */
+		swap(arr, i, j);
+	}
+
+	/* swap our jth element with our pivot */
+	swap(arr, lo, j);
+
+	/* we're done here, return our pivot point */
+	return j;
+}
+
+/* 
+ * quicksort main procedure
+ */
+void quicksort(int *arr, int lo, int hi) {
+
+	/* as long as our rightmost index isn't the second element */
+	if(hi > 1) {
+
+		/* get our partition element */
+		int part = partition(arr, lo, hi);
+
+		/* bounds checking for continuing quicksort left case */
+		if(lo < (part - 1)) {
+
+			/* recursive call to quicksort the left partition */
+			quicksort(arr, lo, part - 1);
+		}
+
+		/* bounds checking for continuing quicksort right case */
+		if((part + 1) < hi) {
+
+			/* recursive call to quicksort the right partition */
+			quicksort(arr, part + 1, hi);
+		}
+	}
+	
+	/* we're done here */
+}
+
+/*
+ * helper function to handle quicksort
+ *
+ * sorts one way so far
+ */
+int* quick_sort_helper(int *nums, int count) {
+
+	/* local variables */
+	// int i = 0;
+	int lo = 0;
+	int hi = count - 1;
 	int *target = malloc(count * sizeof(int));
 
 	/* error checking */
@@ -80,14 +169,18 @@ int *quick_sort_helper(int *nums, int count, compare_cb cmp) {
 	memcpy(target, nums, count * sizeof(int));
 
 	/* call quicksort on the array */
-	quicksort(target, left, right);
+	quicksort(target, lo, hi);
 
-	/* we're done here, return the sorted array */
+	/* we're done here, print the array */
+	// printf("SORTED BY QUICKSORT:\n");
+
+	// for (i = 0; i < count; i++) {
+		// printf("Element %d: %d\n", i, target[i]);
+	// }
+
+	/* return the array */
 	return target;
-
 }
-
-
 
 static inline int sorted_order(int a, int b) {
 
@@ -115,13 +208,22 @@ static int strange_order(int a, int b) {
 	return result;
 }
 
-void test_sorting(int *nums, int count, compare_cb cmp) {
+void test_sorting(int *nums, int count, compare_cb cmp, char *algo) {
 
 	/* local variables */
 	int i = 0;
+	int *sorted;
 
-	/* sort our array and return it */
-	int *sorted = bubble_sort(nums, count, cmp);
+	/* sort our array and return it according to algo chosen */
+	if(!(strcmp(algo, "quicksort"))) {
+
+		sorted = quick_sort_helper(nums, count);
+	}
+
+	if(!(strcmp(algo, "bubblesort"))) {
+
+		sorted = bubble_sort(nums, count, cmp);
+	}
 
 	/* error checking on sort algo */
 	if(!sorted) die("Failed to sort as requested.");
@@ -143,12 +245,13 @@ void test_sorting(int *nums, int count, compare_cb cmp) {
 int main(int argc, char **argv) {
 
 	/* error checking for argc */
-	if(argc < 2) die("USAGE: ./ex19 4 3 1 5 6");
+	if(argc < 2) die("USAGE: ./ex19 <quicksort | bubblesort> <...numbers...>");
 
 	/* local variables */
-	int count = argc - 1;
+	char *algo = argv[1];
+	int count = argc - 2;
 	int i = 0;
-	char **inputs = argv + 1;
+	char **inputs = argv + 2;
 
 	/* declare and allocate a new number array */
 	int *numbers = malloc(count * sizeof(int));
@@ -163,9 +266,9 @@ int main(int argc, char **argv) {
 	}
 
 	/* test the sorting */
-	test_sorting(numbers, count, sorted_order);
-	test_sorting(numbers, count, reverse_order);
-	test_sorting(numbers, count, strange_order);
+	test_sorting(numbers, count, sorted_order, algo);
+	test_sorting(numbers, count, reverse_order, algo);
+	test_sorting(numbers, count, strange_order, algo);
 
 	/* dealloc numbers */
 	free(numbers);
