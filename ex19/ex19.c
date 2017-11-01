@@ -60,7 +60,14 @@ int *bubble_sort(int *nums, int count, compare_cb cmp) {
 	return target;
 }
 
-/* helper function to handle quicksort */
+void quicksort(int *nums, int left, int right) {
+
+	
+}
+
+/* helper function to handle quicksort
+ * utilizes C built-in qsort function
+ */
 int *quick_sort_helper(int *nums, int count, compare_cb cmp) {
 	int left = 0;
 	int right = count - 1;
@@ -78,12 +85,6 @@ int *quick_sort_helper(int *nums, int count, compare_cb cmp) {
 	/* we're done here, return the sorted array */
 	return target;
 
-}
-
-/* recursive implementation of quicksort */
-void quicksort(int *arr, int count, int left, int right) {
-
-	/* IMPLEMENT THIS */
 }
 
 

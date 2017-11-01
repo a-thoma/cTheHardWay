@@ -43,7 +43,27 @@ int partition(int *arr, int lo, int hi) {
 	/* local variables */
 	int pivot = arr[hi]; /* our pivot value from the array */
 
-	/* IMPLEMENT THIS */
+	while (lo <= hi) {
+
+    	while (arr[lo] < pivot) {
+
+    		lo++;
+    	}
+
+    	while (arr[hi] > pivot) {
+
+    		hi--;
+    	}
+
+    	if (lo <= hi) {
+
+    		swap(arr, lo, hi);
+    		lo++;
+    		hi--;
+ 		}
+	}
+
+	return pivot;
 }
 
 /********************** quicksort main procedure **********************
@@ -57,17 +77,47 @@ void quicksort(int *arr, int lo, int hi) {
 
 	/* local variables */
 
-	/* check if our lo index is less than our hi index */
-	if(lo < hi) {
+	int i = 0;
+	int j = 0;
+	int temp = 0;
+	int pivot = 0;
 
-		/* grab partition index of the array */
-		int p = partition(arr, lo, hi);
+	if(hi > 1) {
 
-		/* recursively call quicksort on two new partitions of the array */
-		quicksort(arr, lo, (p - 1));
-		quicksort(arr, (p + 1), hi);
+		i = lo + 1;
+		j = hi;
+		pivot = arr[lo];
+
+		while(1) {
+
+			while(arr[i] < pivot && i < hi) {
+
+				i++;
+			}
+
+			while(arr[j] > pivot && j > lo) {
+
+				j--;
+			}
+
+			if(i >= j) break;
+
+			temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+		}
+		temp = arr[lo]; arr[lo] = arr[j]; arr[j] = temp;
+
+
+		if(lo < (j - 1)) {
+
+			quicksort(arr, lo, j - 1);
+		}
+		
+		if((j + 1) < hi) {
+
+			quicksort(arr, j + 1, hi);
+		}
 	}
-
+	
 	/* we're done here */
 }
 
@@ -99,9 +149,19 @@ int main(int argc, char **argv) {
 	/* get a pointer for our array */
 	int *arrptr = arr;
 
+	/* print array before quicksort */
+	printf("UNSORTED:\n");
+
+	for (i = 0; i < length; i++) {
+
+		/* print an element from the array with some pretty formatting */
+		printf("Element %d: %d\n", i, arr[i]);
+	}
+
 	/* sort the array via quicksort */
 	quicksort_helper(arrptr, length);
 
+	printf("SORTED:\n");
 	/* print out the array again */
 	for (i = 0; i < length; i++) {
 
