@@ -86,8 +86,8 @@ int partition(int *arr, int lo, int hi) {
  */
 void quicksort(int *arr, int lo, int hi) {
 
-	/* as long as our rightmost index isn't the second element */
-	if(hi > 1) {
+	/* as long as our rightmost index isn't the first element */
+	if(hi > 0) {
 
 		/* get our partition element */
 		int part = partition(arr, lo, hi);
@@ -136,9 +136,7 @@ int main(int argc, char **argv) {
 	/* local variables */
 	int i = 0; 						/* iterator */
 
-	/* ARRAY FOUND TO NOT WORK: 3 4 5 6 2 1 */
-	/* TODO: FIX THIS */
-	int arr[] = {2, 6, 3, 1, 5, 4, 7, 10, 9, 8}; /* array to sort */
+	int arr[] = {1, 6, 3, 2, 5, 4}; /* array to sort */
 	int length = (sizeof(arr) / sizeof(int));
 
 	/* get a pointer for our array */
