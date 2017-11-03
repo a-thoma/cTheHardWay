@@ -1,5 +1,3 @@
-/* TODO: Find out how to add cmp functionality to quicksort implementation */
-
 /* TODO: Can I just make a header for quicksort and use that instead of
  * copying and pasting it in this source file?
  */
@@ -86,7 +84,7 @@ void swap(int *arr, int i, int j) {
  * partition function
  * returns the partition index for our array
  */
-int partition(int *arr, int lo, int hi) {
+int partition(int *arr, int lo, int hi, compare_cb cmp) {
 
 	/* local variables */
 	int i = lo + 1;     /* leftmost iterator */
@@ -97,14 +95,14 @@ int partition(int *arr, int lo, int hi) {
 	while(1) {
 
 		/* as long as our ith element is less than our pivot */
-		while(arr[i] < pivot && i < hi) {
+		while(cmp(arr[i], pivot) < 0 && i < hi) {
 
 			/* iterate through the array */
 			i++;
 		}
 
 		/* as long as our jth element is greater than our pivot */
-		while(arr[j] > pivot && j > lo) {
+		while(cmp(arr[j], pivot) > 0 && j > lo) {
 
 			/* iterate through the array */
 			j--;
@@ -127,26 +125,26 @@ int partition(int *arr, int lo, int hi) {
 /* 
  * quicksort main procedure
  */
-void quicksort(int *arr, int lo, int hi) {
+void quicksort(int *arr, int lo, int hi, compare_cb cmp) {
 
 	/* as long as our rightmost index isn't the first element */
 	if(hi > 0) {
 
 		/* get our partition element */
-		int part = partition(arr, lo, hi);
+		int part = partition(arr, lo, hi, cmp);
 
 		/* bounds checking for continuing quicksort left case */
 		if(lo < (part - 1)) {
 
 			/* recursive call to quicksort the left partition */
-			quicksort(arr, lo, part - 1);
+			quicksort(arr, lo, part - 1, cmp);
 		}
 
 		/* bounds checking for continuing quicksort right case */
 		if((part + 1) < hi) {
 
 			/* recursive call to quicksort the right partition */
-			quicksort(arr, part + 1, hi);
+			quicksort(arr, part + 1, hi, cmp);
 		}
 	}
 	
@@ -158,7 +156,7 @@ void quicksort(int *arr, int lo, int hi) {
  *
  * sorts one way so far
  */
-int* quick_sort_helper(int *nums, int count) {
+int* quick_sort_helper(int *nums, int count, compare_cb cmp) {
 
 	/* local variables */
 	// int i = 0;
@@ -172,17 +170,10 @@ int* quick_sort_helper(int *nums, int count) {
 	/* copy nums array to target array */
 	memcpy(target, nums, count * sizeof(int));
 
-	/* call quicksort on the array */
-	quicksort(target, lo, hi);
+	/* call quicksort on the target array */
+	quicksort(target, lo, hi, cmp);
 
-	/* we're done here, print the array */
-	// printf("SORTED BY QUICKSORT:\n");
-
-	// for (i = 0; i < count; i++) {
-		// printf("Element %d: %d\n", i, target[i]);
-	// }
-
-	/* return the array */
+	/* we're done here, return the sorted target array */
 	return target;
 }
 
@@ -221,7 +212,7 @@ void test_sorting(int *nums, int count, compare_cb cmp, char *algo) {
 	/* sort our array and return it according to algo chosen */
 	if(!(strcmp(algo, "quicksort"))) {
 
-		sorted = quick_sort_helper(nums, count);
+		sorted = quick_sort_helper(nums, count, cmp);
 	}
 
 	if(!(strcmp(algo, "bubblesort"))) {

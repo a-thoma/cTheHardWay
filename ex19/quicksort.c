@@ -6,8 +6,6 @@
  *
  */
 
- /* TODO: Fix edge case with array (TODO tags in main) */
-
 #include <stdio.h>
 #include <stdlib.h>
 
