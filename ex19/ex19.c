@@ -129,8 +129,8 @@ int partition(int *arr, int lo, int hi) {
  */
 void quicksort(int *arr, int lo, int hi) {
 
-	/* as long as our rightmost index isn't the second element */
-	if(hi > 1) {
+	/* as long as our rightmost index isn't the first element */
+	if(hi > 0) {
 
 		/* get our partition element */
 		int part = partition(arr, lo, hi);
