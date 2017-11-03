@@ -134,7 +134,7 @@ int main(int argc, char **argv) {
 	/* local variables */
 	int i = 0; 						/* iterator */
 
-	int arr[] = {1, 6, 3, 2, 5, 4}; /* array to sort */
+	int arr[] = {2, 6, 3, 1, 5, 4, 9, 8, 7}; /* array to sort */
 	int length = (sizeof(arr) / sizeof(int));
 
 	/* get a pointer for our array */

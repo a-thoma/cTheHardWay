@@ -23,7 +23,7 @@ void die(const char *msg) {
 	}
 
 	/* we're done here, exit indicating something went wrong */
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 /* create an alias type for a function pointer */
@@ -187,7 +187,18 @@ static inline int reverse_order(int a, int b) {
 	return b - a;
 }
 
-static int strange_order(int a, int b) {
+/* this was changed to fix an issue with the way strange_order
+ * interacted with quicksort. if the value of a % b comes out
+ * to be 0, it will run the opposite (i.e. b % a).
+ *
+ * one other way to fix this (may be implemented if it is found
+ * that this does not fix every case) is to implement two random
+ * numbers, compare them in modulo, and compare that number in
+ * modulo with the larger of the two numbers passed to this
+ * static inline procedure.
+ *
+ */
+static inline int strange_order(int a, int b) {
 
 	int result;
 
@@ -197,6 +208,11 @@ static int strange_order(int a, int b) {
 	} else {
 
 		result = a % b;
+
+		if(!result) {
+
+			result = b % a;
+		}
 	}
 
 	/* we're done here, return the result */
@@ -269,5 +285,5 @@ int main(int argc, char **argv) {
 	free(numbers);
 
 	/* we're all done, return indicating everything went ok */
-	return 0;
+	return EXIT_SUCCESS;
 }
