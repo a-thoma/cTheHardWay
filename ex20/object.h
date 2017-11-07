@@ -20,6 +20,7 @@ typedef struct {
 
 	/* functions inherent to struct Object */
 	int (*init)(void *self);
+	void (*describe)(void *self);
 	void (*destroy)(void *self);
 	void *(*move) (void *self, Direction direction);
 	int (*attack) (void *self, int damage);
@@ -35,7 +36,7 @@ void *Object_new(size_t size, Object proto, char *description);
 
 /* c preprocessor definitions */
 
-/* define a macro, NEW(T,N) for Object_new
+/* define a macro, NEW(T,N) for calling Object_new
  * T###Proto means to concatenate Proto at the end of variable T
  */
 #define NEW(T, N) Object_new(sizeof(T), T##Proto, N)

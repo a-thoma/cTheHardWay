@@ -25,10 +25,10 @@ typedef struct Room {
 
 	Monster *bad_guy;
 
-	Room *north;
-	Room *south;
-	Room *east;
-	Room *west;
+	struct Room *north;
+	struct Room *south;
+	struct Room *east;
+	struct Room *west;
 } Room;
 
 /* prototypes for struct Room */
